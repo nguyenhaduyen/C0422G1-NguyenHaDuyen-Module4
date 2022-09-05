@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+<button id="btn-list">List</button>
+<button id="btn-add">Add</button>
+<div class="container mt-4" id="list" style="display: none">
+    <div class="row w-50 mx-auto mt-4">
+        <div class="col-lg-12">
+            <h2>List Smartphones</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>producer</th>
+                    <th>model</th>
+                    <th>price</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="bodySmartphone"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="formEdit">
+    <form>
+        <label for="idPhone">ID</label>
+        <input id="idPhone"><br>
+        <label for="producerPhone">producer</label>
+        <input id="producerPhone"><br>
+        <label for="modelPhone">model</label>
+        <input id="modelPhone"><br>
+        <label for="pricePhone">price</label>
+        <input id="pricePhone"><br>
+        <button id="update" type="button">Update</button>
+
+    </form>
+</div>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+       onload= getListSmartphone()
+    })
+
+    function getListSmartphone() {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: "http://localhost:8080/smartphone/list",
+            success: function (smartphoneList) {
+                let listSmartphone = smartphoneList
+                debugger
+                let htmlStr = '';
+                for (let i = 0; i < listSmartphone.length; i++) {
+                    htmlStr += `<tr>
+                        <td>${i + 1}</td>
+                        <td>${listSmartphone[i].id}</td>
+                        <td>${listSmartphone[i].producer}</td>
+                        <td>${listSmartphone[i].model}</td>
+                        <td>${listSmartphone[i].price}</td>
+
+                         <td><button onclick="editPhone('${listSmartphone[i].id}' )">Update</button> </td>
+
+                        </tr>`;
+                }
+                $("#bodySmartphone").html(htmlStr)
+                $("#formEdit").hide();
+            },
+            error: function (resultError) {
+
+            }
+        })
+    }
+</script>
+<div id="add" style="display: none">
+    <p>Create Smartphone</p>
+    <p>Producer</p>
+
+    <input type="text" id="producer">
+    <p>Model</p>
+    <input type="text" id="model">
+    <p>Price</p>
+    <input type="text" id="price"><br>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <button id="create" type="button">Create</button>
+</div>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+    $("#create").click(function () {
+        let producer = $("#producer").val();
+        let model = $("#model").val()
+        let price = $("#price").val()
+        let smartphone = {
+            producer: producer,
+            model: model,
+            price: price
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "http://localhost:8080/smartphone/create",
+            data: JSON.stringify(smartphone),
+            success: function (resultSuccess) {
+                alert('register successfully ')
+            },
+            error: function (resultError) {
+                alert('error');
+            }
+        });
+    });
+</script>
+
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+    function editPhone(id) {
+        console.log(id)
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: "http://localhost:8080/smartphone/showUpdate?id=" + id,
+            success: function (smartphone) {
+                console.log(smartphone.id);
+                $('#list').hide()
+                $("#formEdit").show();
+
+                $("#idPhone").val(smartphone.id);
+                $("#producerPhone").val(smartphone.producer)
+                $("#modelPhone").val(smartphone.model)
+                $("#pricePhone").val(smartphone.price)
+
+            },
+            error: function (resultError) {
+
+            }
+        })
+    }
+    $("#update").click(function () {
+        let id = $("#idPhone").val();
+        let producer = $("#producerPhone").val();
+        let model = $("#modelPhone").val()
+        let price = $("#pricePhone").val()
+        let smartphone = {
+            id: id,
+            producer: producer,
+            model: model,
+            price: price
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "http://localhost:8080/smartphone/saveUpdate",
+            data: JSON.stringify(smartphone),
+            success: function (resultSuccess) {
+                alert('register successfully ')
+            },
+            error: function (resultError) {
+                alert('error');
+            }
+
+        });
+    });
+    onload=getListSmartphone()
+</script>
+<script>
+    $("#btn-list").click(function () {
+        $('#list').show();
+        $("#add").hide();
+        $("#formEdit").hide();
+    })
+    $("#btn-add").click(function () {
+        $('#add').show();
+        $('#list').hide();
+    })
+
+</script>
+</body>
+</html>

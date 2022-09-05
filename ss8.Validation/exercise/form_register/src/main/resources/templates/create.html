@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+
+</head>
+<body>
+<h2 class="text-center mt-5">Trang tao moi</h2>
+<div class="container">
+    <a href="/" class="btn btn-primary">Quay lai trang list</a>
+    <form action="/saveCreate" method="post" th:object="${formDto}" class="shadow container w-50 mt-5">
+        <p class="mt-5"> First Name<input th:field="*{firstName}"></p>
+        <p class="text-danger" th:errors="*{firstName}"></p>
+        <p>Last Name <input th:field="*{lastName}"></p>
+        <p class="text-danger" th:errors="*{lastName}"></p>
+        <p>Email <input th:field="*{email}"></p>
+        <p class="text-danger" th:errors="*{email}"></p>
+        <p>Age <input type="date" th:field="*{age}"></p>
+        <p class="text-danger" type="text" th:errors="*{age}"></p>
+        <p>Phone <input th:field="*{phoneNumber}"></p>
+        <p class="text-danger" th:errors="*{phoneNumber}"></p>
+        <p>
+            <button type="submit">Save</button>
+        </p>
+    </form>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

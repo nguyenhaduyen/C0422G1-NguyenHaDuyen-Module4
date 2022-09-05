@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Trang danh sach blog</h2>
+<a href="/create">Them moi blog</a>
+<form action="/search" method="get" id="formSearch">
+    <select name="categoryId" onchange="displayByCategory()">
+        <option value="">Chonj</option>
+        <option th:each="c : ${category}" th:value="${c.nameOfCategory}" th:text="${c.nameOfCategory}"></option>
+    </select>
+    <button type="submit">Search</button>
+
+</form>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Ten tac pham</th>
+        <th>Ten the loai</th>
+        <th>Delete</th>
+        <th>Update</th>
+        <th>Detail</th>
+    </tr>
+    <tr th:each="blog, loop : ${blogList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${blog.tittle}"></td>
+        <td th:text="${blog.categoryBlog.nameOfCategory}"></td>
+        <td><a th:href="@{delete(id=${blog.id})}">Delete</a></td>
+        <td><a th:href="@{update(id=${blog.id})}">Update</a></td>
+        <td><a th:href="@{detail(id=${blog.id})}">Detail</a></td>
+    </tr>
+</table>
+<script>
+function displayByCategory() {
+    document.getElementById("formSearch").submit();
+}
+</script>
+</body>
+</html>

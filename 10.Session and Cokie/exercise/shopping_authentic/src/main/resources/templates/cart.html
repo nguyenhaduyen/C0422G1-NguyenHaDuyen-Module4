@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Ten</th>
+        <th>Gia</th>
+        <th>So Luong</th>
+        <th>Xoa</th>
+    </tr>
+    <tr th:each="product, loop : ${cart}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${product.key.name}"></td>
+        <td th:text="${product.key.price}"></td>
+        <td>
+            <a th:href="@{changeQuantity(id=${product.key.id},operand='+')}">+</a>
+            <span th:text="${product.getValue()}"></span>
+            <a th:href="@{changeQuantity(id=${product.key.id},operand='-')}">-</a>
+        </td>
+        <td>
+            <a th:href="@{deleteProduct(id=${product.key.id})}">Xoa</a>
+        </td>
+    </tr>
+</table>
+<p>Total: <span th:text="${total}"></span> </p>
+<a href="/">Quay lai trang list</a>
+</body>
+</html>

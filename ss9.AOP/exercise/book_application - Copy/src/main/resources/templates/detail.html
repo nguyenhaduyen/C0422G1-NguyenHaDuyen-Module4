@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Trang detail sách</h2>
+<p th:text="${msg}"></p>
+<p>Tên sách: <span th:text="${library.nameOfBook}"></span></p>
+<p>Tác Giả: <span th:text="${library.author}"></span></p>
+<p>Thể Loại: <span th:text="${library.category}"></span></p>
+<p><a th:href="@{/borrow(id=${library.id})}">Borrow</a></p>
+<p><a href="/">Quay lại trang list</a></p>
+</body>
+</html>

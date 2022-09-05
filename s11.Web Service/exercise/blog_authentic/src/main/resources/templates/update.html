@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Trang update</h2>
+<form action="/saveUpdate" method="post" th:object="${blog}">
+    <input type="hidden" th:field="*{id}">
+    <p>Tittle<input type="text" th:field="*{tittle}"></input></p>
+    <p>Content<input type="text" th:field="*{content}"></input></p>
+    <p>Authority<input type="text" th:field="*{authority}"></input></p>
+    <p>Ten the loai
+        <select th:field = "*{categoryBlog}">
+            <option th:each="category : ${category} " th:value="${category.id}" th:text="${category.nameOfCategory}"></option>
+        </select>
+    </p>
+    <p>
+        <button type="submit">Luu</button>
+    </p>
+</form>
+<a href="/">Quay ve trang list</a>
+</body>
+</html>
