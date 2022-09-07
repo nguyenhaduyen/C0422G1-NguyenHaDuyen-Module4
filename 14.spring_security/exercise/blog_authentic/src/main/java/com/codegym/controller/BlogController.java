@@ -5,6 +5,9 @@ import com.codegym.model.CategoryBlog;
 import com.codegym.service.IBlogService;
 import com.codegym.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class BlogController {
@@ -22,9 +29,21 @@ public class BlogController {
     private ICategoryService iCategoryService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, Principal principal) {
         model.addAttribute("blogList", iBlogService.findAll());
         model.addAttribute("category",iCategoryService.findAll());
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        Set<GrantedAuthority> setGrant = new HashSet<GrantedAuthority>(loginedUser.getAuthorities());
+        for(GrantedAuthority s:setGrant){
+           if (s.getAuthority().equals(
+                   "ROLE_ADMIN")){
+               String a= "ADMIN";
+               model.addAttribute("a",a);
+           }else
+               model.addAttribute("a",' ');
+        }
+
+
         return "list";
     }
 
