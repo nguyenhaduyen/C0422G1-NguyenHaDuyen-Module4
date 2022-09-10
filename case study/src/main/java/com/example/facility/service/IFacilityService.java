@@ -16,5 +16,7 @@ public interface IFacilityService {
 
     Optional<Facility> findId(int id);
 
-//    Page<Facility> findAllByFacilityTypeNameContaining(String name, Pageable pageable);
+    Page<Facility> findAllByFacilityNameContaining(String name, Pageable pageable);
+
+    void delete (int id);
 }

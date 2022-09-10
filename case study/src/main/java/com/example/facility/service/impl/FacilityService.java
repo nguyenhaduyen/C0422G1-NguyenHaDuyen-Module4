@@ -48,8 +48,13 @@ public class FacilityService implements IFacilityService {
         return iFacilityRepository.findById(id);
     }
 
-//    @Override
-//    public Page<Facility> findAllByFacilityTypeNameContaining(String name, Pageable pageable) {
-//        return iFacilityRepository.findAllByFacilityTypeNameContaining(name, pageable);
-//    }
+    @Override
+    public Page<Facility> findAllByFacilityNameContaining(String name, Pageable pageable) {
+        return iFacilityRepository.findAllByFacilityNameContaining(name, pageable);
+    }
+
+    @Override
+    public void delete(int id) {
+        iFacilityRepository.deleteById(id);
+    }
 }

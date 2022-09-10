@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,22 +12,25 @@
 <table class="table table-striped table-hover mt-3 w-75 m-auto">
     <thead class="table-primary">
     <th scope="col">#</th>
-    <th scope="col">Dịch Vụ</th>
-    <th scope="col">Khách Hàng</th>
+    <th scope="col">Dịch vụ</th>
+    <th scope="col"> Nhân Viên </th>
+    <th scope="col"> Khách Hàng </th>
     <th scope="col">Ngày Bắt Đầu</th>
     <th scope="col">Ngày Kết Thúc</th>
-    <th>Tiền đặt cọc</th>
-    <th scope="col">Tổng Tiền</th>
-    <th scope="col">Các Dịch Vụ Đi Kèm</th>
+    <th scope="col">Tiền đặt cọc</th>
+    <th scope="col">Tổng tiền</th>
+    <th scope="col">Các dịch vụ đi kèm</th>
+
     </thead>
-    <tr>
-        <td>1</td>
-        <td>Room Twin 01</td>
-        <td>Nguyễn Thị Hào</td>
-        <td>8/12/2020</td>
-        <td>8/12/2020</td>
-        <td>0</td>
-        <td>1000000</td>
+    <tr th:each="contractNew , loop : ${contract}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${contractNew.facility.facilityName}"></td>
+        <td th:text="${contractNew.employee.nameOfEmployee}"></td>
+        <td th:text="${contractNew.customer.customerName}"></td>
+        <td th:text="${contractNew.startDate}"></td>
+        <td th:text="${contractNew.endDate}"></td>
+        <td th:text="${contractNew.deposit}"></td>
+
         <td>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 +
@@ -39,7 +42,6 @@
     </tr>
     <tbody>
 </table>
-
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">

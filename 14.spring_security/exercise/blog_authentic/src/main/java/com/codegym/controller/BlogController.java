@@ -33,7 +33,7 @@ public class BlogController {
         model.addAttribute("blogList", iBlogService.findAll());
         model.addAttribute("category",iCategoryService.findAll());
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
-        Set<GrantedAuthority> setGrant = new HashSet<GrantedAuthority>(loginedUser.getAuthorities());
+        Set<GrantedAuthority> setGrant = new HashSet<>(loginedUser.getAuthorities());
         for(GrantedAuthority s:setGrant){
            if (s.getAuthority().equals(
                    "ROLE_ADMIN")){
@@ -87,9 +87,19 @@ public class BlogController {
         return "detail";
     }
     @GetMapping ("/search")
-    public String search (@RequestParam(defaultValue = "") String categoryId, Model model) {
+    public String search (@RequestParam(defaultValue = "") String categoryId, Model model,Principal principal) {
         model.addAttribute("blogList", iBlogService.findAllByCategoryBlog_NameOfCategoryContains(categoryId));
         model.addAttribute("category",iCategoryService.findAll());
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        Set<GrantedAuthority> setGrant = new HashSet<GrantedAuthority>(loginedUser.getAuthorities());
+        for(GrantedAuthority s:setGrant){
+            if (s.getAuthority().equals(
+                    "ROLE_ADMIN")){
+                String a= "ADMIN";
+                model.addAttribute("a",a);
+            }else
+                model.addAttribute("a",' ');
+        }
         return "list";
     }
 }

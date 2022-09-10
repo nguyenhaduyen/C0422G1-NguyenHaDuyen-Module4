@@ -16,10 +16,12 @@
         <input type="text" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" th:field="*{customerName}">
 
     </div>
+    <p  class="text-danger" th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"></p>
     <div class="mb-3">
         <label class="form-label">Ngày Sinh</label>
         <input type="date" class="form-control" aria-describedby="emailHelp" th:field="*{dateOfBirth}">
     </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
     <div class="mb-3">
         <label class="form-label">Giới Tính</label>
         <select th:field="*{gender}">
@@ -32,17 +34,18 @@
         <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{identify}">
 
     </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('identify')}" th:errors="*{identify}"></p>
     <div class="mb-3">
         <label class="form-label">Số Điện Thoại</label>
         <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{phoneNumber}">
 
     </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
     <div class="mb-3">
         <label class="form-label">Email</label>
         <input type="text" class="form-control" aria-describedby="emailHelp" name="email" th:field="*{email}">
-
-
     </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
     <div class="mb-3">
         <label class="form-label">Địa Chỉ</label>
         <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{address}" >
