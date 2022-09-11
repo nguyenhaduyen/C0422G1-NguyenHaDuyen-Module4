@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<nav th:replace="~{common :: html_header}"></nav>
+<h3 class="text-center mt-3">Update Service</h3>
+<form class="w-25 container-fluid mt-3 shadow" method="post" action="/saveUpdateFacility" th:object="${facility}" >
+    <input type="hidden" th:field="*{facilityId}">
+    <div class="mb-3">
+        <label class="form-label mt-3">Chọn dịch vụ</label>
+        <select onchange="serviceInput()" id="select" name="service" th:field="*{facilityType}">
+            <option value="0">None</option>
+            <option th:each="facilityNew : ${facilityTypeNew}" th:value="${facilityNew.facilityTypeId}" th:text="${facilityNew.facilityTypeName}"></option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Tên dịch vụ</label>
+        <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{facilityName}">
+    </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('facilityName')}" th:errors="*{facilityName}"></p>
+    <div class="mb-3">
+        <label class="form-label">Diện tích sử dụng</label>
+        <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{area}">
+    </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></p>
+    <div class="mb-3">
+        <label class="form-label">Chi phí thuê</label>
+        <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{cost}">
+    </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></p>
+    <div class="mb-3">
+        <label class="form-label">Số lượng người tối đa</label>
+        <input type="text" class="form-control" aria-describedby="emailHelp" th:field="*{maxPeople}">
+    </div>
+    <div class="mb-3" id="s1" style="display: none ">
+        <label class="form-label">Tiêu chuẩn phòng</label>
+        <input type="text" id="s1Input" class="form-control" aria-describedby="emailHelp" th:field="*{standardRoom}">
+    </div>
+    <div class="mb-3" id="s4" style="display: none ">
+        <label class="form-label">Mô tả tiện nghi khác</label>
+        <input type="text" id="s4Input" class="form-control" aria-describedby="emailHelp" th:field="*{descriptionOtherConvenience}">
+    </div>
+    <div class="mb-3" id="s3" style="display: none ">
+        <label class="form-label">Diện tích hồ bơi</label>
+        <input type="text" id="s3Input" class="form-control" aria-describedby="emailHelp" th:field="*{poolArea}">
+    </div>
+    <div class="mb-3" id="s2" style="display: none ">
+        <label class="form-label">Số tầng</label>
+        <input type="text" id="s2Input" class="form-control" aria-describedby="emailHelp" th:field="*{numberOfFloor}">
+    </div>
+    <p class="text-danger" th:if="${#fields.hasErrors('numberOfFloor')}" th:errors="*{numberOfFloor}"></p>
+    <div class="mb-3" id="s5" style="display: none ">
+        <label class="form-label">Dịch vụ miễn phí đi kèm</label>
+        <input type="text" id="s5Input" class="form-control" aria-describedby="emailHelp" th:field="*{facilityFree}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Kiểu thuê</label>
+        <select th:field="*{rentType}" >
+            <option th:each="type : ${rentTypeList}" th:value="${type.rentTypeId}" th:text="${type.rentTypeName}"></option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
+<footer th:replace=" ~{common :: html_footer}"></footer>
+</body>
+<script>
+    serviceInput()
+    function serviceInput() {
+        let type = document.getElementById("select").value;
+        console.log(type)
+        switch (type) {
+            case "1":
+                document.getElementById("s1").style.display = "block"
+                document.getElementById("s2").style.display = "block"
+                document.getElementById("s3").style.display = "block"
+                document.getElementById("s4").style.display = "block"
+                document.getElementById("s5").style.display = "none"
+                document.getElementById("s5Input").value = null;
+                break;
+            case "2":
+                document.getElementById("s1").style.display = "block"
+                document.getElementById("s2").style.display = "block"
+                document.getElementById("s3").style.display = "none"
+                document.getElementById("s3Input").value = null;
+                document.getElementById("s4").style.display = "block"
+                document.getElementById("s5").style.display = "none"
+                document.getElementById("s5Input").value = null;
+
+                break;
+            case "3":
+                document.getElementById("s1").style.display = "none"
+                document.getElementById("s1Input").value = null;
+                document.getElementById("s2").style.display = "none"
+                document.getElementById("s2Input").value = null;
+                document.getElementById("s3").style.display = "none"
+                document.getElementById("s3Input").value = null;
+                document.getElementById("s4").style.display = "none"
+                document.getElementById("s4Input").value = null;
+                document.getElementById("s5").style.display = "block"
+                break;
+            default:
+                document.getElementById("s1").style.display = "none"
+                document.getElementById("s2").style.display = "none"
+                document.getElementById("s3").style.display = "none"
+                document.getElementById("s4").style.display = "none"
+                document.getElementById("s5").style.display = "none"
+        }
+    }
+</script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</html>

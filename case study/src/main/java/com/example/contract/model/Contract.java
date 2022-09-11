@@ -1,8 +1,6 @@
 package com.example.contract.model;
 
-import com.example.contract_detail.model.ContractDetail;
 import com.example.customer.model.Customer;
-import com.example.employee.model.Employee;
 import com.example.facility.model.Facility;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,9 +29,9 @@ public class Contract {
     @Column (name = "deposit")
     private Double deposit;
 
-    @ManyToOne
-    @JoinColumn (name = "employee_id", referencedColumnName = "employee_id")
-    private Employee employee;
+//    @ManyToOne
+//    @JoinColumn (name = "employee_id", referencedColumnName = "employee_id")
+//    private Employee employee;
 
     @ManyToOne
     @JoinColumn (name = "customer_id", referencedColumnName = "customer_id")

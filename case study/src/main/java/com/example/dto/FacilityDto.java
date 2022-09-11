@@ -10,6 +10,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+
 
 @Getter
 @Setter
@@ -45,12 +48,21 @@ public class FacilityDto implements Validator {
            if (facilityDto.numberOfFloor<=0) {
                errors.rejectValue("numberOfFloor","add.numberOfFloor","Số tầng phải là số nguyên dương");
            }
-
        }
         if (facilityDto.cost != null){
             if(facilityDto.cost<=0) {
                 errors.rejectValue("cost","add.cost","Giá phải là số dương.");
             }
         }
+        if (facilityDto.area!=null) {
+            if (facilityDto.area<=0) {
+                errors.rejectValue("area","add.area","Area phải là số dương.");
+            }
+        }
+//        if (facilityDto.facilityType.getFacilityTypeId()!=3) {
+//            if (facilityDto.poolArea == null) {
+//                errors.rejectValue("poolArea","add.area","poolArea khoong duoc de trong");
+//            }
+//        }
     }
 }

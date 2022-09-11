@@ -248,8 +248,8 @@ public class MainController {
     }
 
     @GetMapping("/listContract")
-    public String listContract(Model model) {
-        model.addAttribute("contract", iContractService.findAll());
+    public String listContract(Model model,@PageableDefault (size = 5) Pageable pageable) {
+        model.addAttribute("contract", iContractService.showListConTract(pageable));
         return "contract/list";
     }
 }
