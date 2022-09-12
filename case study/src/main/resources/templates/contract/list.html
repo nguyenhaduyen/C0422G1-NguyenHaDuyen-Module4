@@ -43,7 +43,7 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 +
             </button>
-            <button th:attr="" id="showListAF" type="button" class="btn btn-primary"
+            <button th:attr="onclick =|showListAF('${contractNew.getId()}')|" type="button" class="btn btn-primary"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Danh sách các dịch vụ đi kèm
             </button>
@@ -149,34 +149,37 @@
 </body>
 <script src="/js/jquery-3.6.1.min.js"></script>
 <script>
-    let idAF = $("#showListAF").val();
-    $('#showListAF').click(function () {
+    function showListAF(id) {
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             type: "GET",
-            url: "http://localhost:8080/listAttachFacility?id=" + idAF,
+            url: "http://localhost:8080/listAttachFacility?id=" + id,
             success: function (facilityList) {
-                let listAF = facilityList.content
+                let listAF = facilityList
+                console.log(listAF)
                 let htmlStr = '';
-                for (let i = 0; i < listAF.length; i++) {
-                    htmlStr += `<tr>
+                if (listAF != null) {
+                    for (let i = 0; i < listAF.length; i++) {
+                        htmlStr += `<tr>
                         <td>${listAF[i].idAttachFacilityId}</td>
                         <td>${listAF[i].nameOfAttachFacility}</td>
                         <td>${listAF[i].price}</td>
                         <td>${listAF[i].unit}</td>
                         <td>${listAF[i].status}</td>
                         </tr>`;
+                    }
                 }
+
                 $("#see").html(htmlStr)
             },
             error: function (resultError) {
 
             }
         })
-    })
+    }
 </script>
 
 
