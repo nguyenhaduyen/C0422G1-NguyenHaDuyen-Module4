@@ -1,5 +1,10 @@
 package com.example.controller;
 
+import com.example.contract.model.AttachFacility;
+import com.example.contract.model.Contract;
+import com.example.contract.model.ContractDetail;
+import com.example.contract.service.IAttachFacilityService;
+import com.example.contract.service.IContractDetailService;
 import com.example.contract.service.IContractService;
 import com.example.customer.model.Customer;
 import com.example.customer.model.TypeCustomer;
@@ -32,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -56,6 +62,11 @@ public class MainController {
     private IDivisionService iDivisionService;
     @Autowired
     private IContractService iContractService;
+    @Autowired
+    private IAttachFacilityService iAttachFacilityService;
+    @Autowired
+    private IContractDetailService iContractDetailService;
+
 
     @GetMapping("/")
     public String home() {
@@ -248,8 +259,21 @@ public class MainController {
     }
 
     @GetMapping("/listContract")
-    public String listContract(Model model,@PageableDefault (size = 5) Pageable pageable) {
+    public String listContract(Model model, @PageableDefault(size = 5) Pageable pageable) {
         model.addAttribute("contract", iContractService.showListConTract(pageable));
+        model.addAttribute("listAttachFacility", iAttachFacilityService.findAll());
         return "contract/list";
+    }
+
+    @PostMapping("/saveContractDetail")
+    public String addContractDetail(int idContract, int attachFacilityId, int quantity) {
+        AttachFacility attachFacility = this.iAttachFacilityService.findById(attachFacilityId);
+        Contract contract = this.iContractService.findById(idContract);
+        if (contract != null && attachFacility != null) {
+            ContractDetail contractDetail = new ContractDetail(quantity, contract, attachFacility);
+            iContractDetailService.addContractDetail(contractDetail);
+        }
+
+        return "redirect:/listContract";
     }
 }

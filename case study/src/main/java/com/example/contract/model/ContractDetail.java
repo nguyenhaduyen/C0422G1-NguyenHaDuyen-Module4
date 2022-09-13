@@ -30,4 +30,10 @@ public class ContractDetail {
     @ManyToOne
     @JoinColumn (name = "attach_facility_id", referencedColumnName = "attach_facility_id")
     private AttachFacility attachFacility;
+
+    public ContractDetail(int quantity, Contract contract, AttachFacility attachFacility) {
+        this.quantity = quantity;
+        this.contract = contract;
+        this.attachFacility = attachFacility;
+    }
 }

@@ -25,4 +25,9 @@ public class ContractService implements IContractService {
         return iContractRepository.showListConTract(pageable);
     }
 
+    @Override
+    public Contract findById(int id) {
+        return this.iContractRepository.findById(id).orElse(null );
+    }
+
 }

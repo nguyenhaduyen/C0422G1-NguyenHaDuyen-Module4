@@ -10,4 +10,5 @@ import java.util.List;
 public interface IContractService {
     Page<ContractPage> showListConTract(Pageable pageable);
 
+    Contract findById(int id);
 }

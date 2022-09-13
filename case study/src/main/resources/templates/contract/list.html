@@ -40,7 +40,8 @@
         <td th:text="${contractNew.getDeposit()}"></td>
         <td th:text="${contractNew.getTotal()}"></td>
         <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                    th:onclick="|getIdContract(${contractNew.getId()})|">
                 +
             </button>
             <button th:attr="onclick =|showListAF('${contractNew.getId()}')|" type="button" class="btn btn-primary"
@@ -79,6 +80,7 @@
 </div>
 
 </div>
+<!--Theem hop dong chi tiet-->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -88,30 +90,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Mã Hợp Đồng Chi Tiết
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp">
-                        </label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail2" class="form-label">Số Lượng</label>
-                        <input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail3" class="form-label">Mã Hợp Đồng</label>
-                        <input type="email" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail4" class="form-label">Mã Dịch Vụ</label>
-                        <input type="email" class="form-control" id="exampleInputEmail4" aria-describedby="emailHelp">
+                <form action="/saveContractDetail" method="post">
+<!--                    <input type="hidden" th:field="*{contract.idContract}" id="idContract">-->
+                    <input type="hidden" name="idContract" id="idContract">
+                    <select name="attachFacilityId">
+                        <option th:each="attachFacilityNew : ${listAttachFacility}"
+                                th:value="${attachFacilityNew.idAttachFacilityId}"
+                                th:text="${attachFacilityNew.nameOfAttachFacility}"></option>
+                    </select>
+                    <input type="number" name="quantity">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
             </div>
         </div>
     </div>
@@ -140,7 +132,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -179,6 +170,11 @@
 
             }
         })
+    }
+
+    function getIdContract(id) {
+        $("#idContract").val(id);
+
     }
 </script>
 
