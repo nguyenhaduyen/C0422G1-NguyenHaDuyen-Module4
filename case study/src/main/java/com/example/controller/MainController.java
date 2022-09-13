@@ -262,7 +262,19 @@ public class MainController {
     public String listContract(Model model, @PageableDefault(size = 5) Pageable pageable) {
         model.addAttribute("contract", iContractService.showListConTract(pageable));
         model.addAttribute("listAttachFacility", iAttachFacilityService.findAll());
+
+        //addContract
+        model.addAttribute("newContract",new Contract());
+        model.addAttribute("employeeList",iEmployeeService.employeeList());
+        model.addAttribute("customerList",iCustomerService.findAll());
+        model.addAttribute("facilityList",iFacilityService.findAll());
         return "contract/list";
+    }
+
+    @PostMapping ("/saveContract")
+    public String saveContract (@ModelAttribute Contract contract) {
+        iContractService.add(contract);
+        return "redirect:/listContract";
     }
 
     @PostMapping("/saveContractDetail")

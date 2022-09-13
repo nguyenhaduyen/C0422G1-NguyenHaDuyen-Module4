@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 public interface IEmployeeService {
     Page<Employee> findAllByNameOfEmployeeContaining(String name, Pageable pageable);
 
@@ -16,4 +18,6 @@ public interface IEmployeeService {
     void update(Employee employee);
 
     Employee findById(int id);
+
+    List<Employee> employeeList ();
 }

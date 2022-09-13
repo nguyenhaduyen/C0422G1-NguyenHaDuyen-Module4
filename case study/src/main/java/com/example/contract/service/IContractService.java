@@ -11,4 +11,6 @@ public interface IContractService {
     Page<ContractPage> showListConTract(Pageable pageable);
 
     Contract findById(int id);
+
+    void add (Contract contract);
 }

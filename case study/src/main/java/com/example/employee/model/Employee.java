@@ -46,8 +46,8 @@ public class Employee {
     @ManyToOne
     @JoinColumn (name = "division_id",referencedColumnName = "division_id")
     private Division division;
-//
-//    @OneToMany(mappedBy = "employee")
-//    private List<Contract> contractList;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Contract> contractList;
 
 }
